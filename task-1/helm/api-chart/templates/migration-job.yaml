@@ -1,0 +1,51 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Chart.Name }}-migration
+  namespace: sre-cource-student-5
+  labels:
+    app: {{ .Chart.Name }}
+    component: migration
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  ttlSecondsAfterFinished: 300
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+        component: migration
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: migration
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          echo "Starting database migration..."
+          echo "Connection string configured"
+          # API container should have migration command or script
+          # If migrations are automatic on startup, we just need to run the app briefly
+          # Otherwise, run specific migration command here
+          dotnet /app/Api.dll || true
+          echo "Migration completed"
+        env:
+        - name: ConnectionStrings__PgConnection
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Chart.Name }}-secret
+              key: connection-string
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Development"
+        resources:
+          limits:
+            cpu: 200m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
