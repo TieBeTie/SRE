@@ -4,9 +4,9 @@
 
 ## Структура
 
-- `task-1` - Домашнее задание #1: PostgreSQL HA Cluster + API Deployment
-- `task-2` - Домашнее задание #2 (в разработке)
-- `task-3` - Домашнее задание #3 (в разработке)
+- `task-1` — Домашнее задание #1: PostgreSQL HA Cluster + API Deployment
+- `task-2` — Домашнее задание #2: Мониторинг (Prometheus, Grafana, алерты, Golden Signals)
+- `task-3` — зарезервировано
 
 ## Автор
 
