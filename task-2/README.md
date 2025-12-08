@@ -1,4 +1,35 @@
-Домашнее задание №2: Мониторинг (Prometheus, Grafana, алерты, Golden Signals)
+Домашнее задание №2
+
+1. Развернуть Prometheus на виртуальной машине
+2. Настроить сбор метрик с PostgreSQL, Patroniи etcd
+3. Настроить сбор blackbox мониторинг API демоприложения
+4. Настроить сбор метрик ОС с виртуальных машин
+5. Создать в Grafana:
+   • Источник данных для своего Prometheus
+   • Создать типовые дашбордыдля компонент из п2-п4
+   • Создать  дашборд с 4 золотыми сигналамидля API демо приложения по данным метрик ingressk8s
+6. Настроить в Prometheus алерты на 4 золотых сигнала мониторинга
+
+Полезные ссылки
+
+Prometheus& alertmanager:
+• https://serverspace.ru/support/help/install-prometheus-ubuntu-20-04/
+• https://linuxhint.com/install-configure-prometheus-alert-manager-ubuntu/
+
+Экспортеры:
+• https://github.com/prometheus-community/postgres_exporter
+• https://github.com/Showmax/patroni-exporter
+• https://github.com/prometheus/blackbox_exporter
+• https://github.com/prometheus/node_exporter
+• https://etcd.io/docs/v3.1/op-guide/monitoring/
+
+Grafana:
+• http://grafana.training.course.sre.mts/
+
+т.к. живёт она на том же ингрессе - необходимо в хосты добавить запись 
+77.105.182.79 grafana.training.course.sre.mts
+логины/пароли пришлю каждому в личку. под вашу учетку создана отдельная организация, где вы админ
+
 
 ## Что сделано
 - Prometheus на balancer (Ansible playbook `task-2/ansible/deploy_prometheus.yml`).
