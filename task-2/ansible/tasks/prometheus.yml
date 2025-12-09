@@ -77,3 +77,4 @@
           - target_label: __address__
             replacement: "127.0.0.1:9115"
 
+
