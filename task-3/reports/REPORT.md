@@ -2,7 +2,7 @@
 
 Проведено нагрузочное тестирование API приложения для определения максимальной производительности системы и выявления узких мест. Нагрузка подавалась через HTTP запросы к ingress, что соответствует реальному сценарию использования.
 
-**Максимальная производительность** была определена тестом с нагрузкой 600 VUs ([`scripts/load_test.js`](../scripts/load_test.js)): система обработала 717,968 успешных запросов (100% HTTP 200, 0% ошибок) с пропускной способностью **~878 RPS** ([`screenshots/max_rps.png`](screenshots/max_rps.png)). При этом p95 latency составил около 2s, что превышает SLO < 500ms (['screenshots/max_latency.png'](max_latency.png)), но все запросы были успешно обработаны.
+**Максимальная производительность** была определена тестом с нагрузкой 600 VUs ([`scripts/load_test.js`](../scripts/load_test.js)): система обработала 717,968 успешных запросов (100% HTTP 200, 0% ошибок) с пропускной способностью **~878 RPS** ([`screenshots/max_rps.png`](screenshots/max_rps.png)). При этом p95 latency составил около 2s, что превышает SLO < 500ms (['screenshots/max_latency.png'](screenshots/max_latency.png)), но все запросы были успешно обработаны.
 
 **Точка насыщения** (максимальная производительность при соблюдении SLO) была определена тестом [`scripts/gradual_load_test.js`](../scripts/gradual_load_test.js) с нагрузкой 300 VUs: система показала **~620 RPS** ([`screenshots/sla_rps.png`](screenshots/sla_rps.png)) при p95 latency 77.9 ms (в пределах SLO < 500ms) ([`screenshots/sla_latency.png`](screenshots/sla_latency.png)) и 0% ошибок ([`screenshots/sla_error_rate.png`](screenshots/sla_error_rate.png)). 
 
