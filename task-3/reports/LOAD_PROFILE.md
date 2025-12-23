@@ -6,9 +6,9 @@
 
 ## Параметры
 - Think time: 0.2-0.7 секунд
-- Ramp-up: постепенное увеличение нагрузки
+- Ramp-up: постепенное увеличение нагрузки до целевого уровня
 
 ## Скрипты
-- `scripts/smoke_test.js` — 5 VUs, 1 мин
-- `scripts/load_test.js` — до 100 VUs, 11 мин
-- `scripts/gradual_load_test.js` — до 30 VUs, 16 мин
+- [`scripts/smoke_test.js`](../scripts/smoke_test.js) — 5 VUs, 1 мин (проверка доступности)
+- [`scripts/load_test.js`](../scripts/load_test.js) — ступенчатая нагрузка до 600 VUs (поиск максимальной производительности)
+- [`scripts/gradual_load_test.js`](../scripts/gradual_load_test.js) — плавный рост нагрузки до 480 VUs (~80% от максимума `load_test.js`, уточнение точки насыщения)

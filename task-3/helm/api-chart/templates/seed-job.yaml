@@ -1,0 +1,60 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Chart.Name }}-seed
+  namespace: sre-cource-student-5
+  labels:
+    app: {{ .Chart.Name }}
+    component: seed
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    # Выполняем после migration-job (у неё hook-weight -5)
+    "helm.sh/hook-weight": "-4"
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 300
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+        component: seed
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: seed-cities
+        image: postgres:alpine
+        env:
+        - name: PGPASSWORD
+          value: "{{ .Values.database.password }}"
+        resources:
+          limits:
+            cpu: "100m"
+            memory: "128Mi"
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+        command:
+        - sh
+        - -c
+        - |
+          echo "Seeding demo cities data..."
+          psql -h {{ .Values.database.host }} \
+               -p {{ .Values.database.port }} \
+               -U {{ .Values.database.username }} \
+               -d {{ .Values.database.name }} << 'SQL'
+          INSERT INTO public.cities(name) VALUES
+            ('City 2'),
+            ('City 3'),
+            ('City 4'),
+            ('City 5'),
+            ('City 6'),
+            ('City 7'),
+            ('City 8'),
+            ('City 9'),
+            ('City 10')
+          ON CONFLICT DO NOTHING;
+          SQL
+          echo "Seeding completed."
+
+

@@ -1,13 +1,15 @@
 # SLO/SLA
 
+Определения Service Level Objectives (SLO) и Service Level Agreements (SLA) для API приложения. Результаты измерений и детали тестирования см. [`REPORT.md`](REPORT.md).
+
 ## Service Level Objectives (SLO)
 
-| Метрика | Целевое значение | Фактическое |
-|---------|------------------|-------------|
-| Availability | 99.9% | 100% ✅ |
-| Latency p95 | < 500ms | 75ms ✅ |
-| Error Rate | < 0.1% | 0% ✅ |
-| Throughput | ≥ 100 RPS | 196 RPS ✅ |
+| Метрика | Целевое значение |
+|---------|------------------|
+| Availability | 99.9% |
+| Latency p95 | < 500ms |
+| Error Rate | < 0.1% |
+| Throughput | ≥ 100 RPS |
 
 ## Service Level Agreements (SLA)
 

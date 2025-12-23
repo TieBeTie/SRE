@@ -9,15 +9,20 @@ const errorRate = new Rate('errors');
 export const options = {
   // Сценарий нагрузки: постепенное увеличение
   stages: [
-    { duration: '1m', target: 10 },   // Разогрев: 10 VUs за 1 минуту
-    { duration: '2m', target: 10 },   // Удержание: 10 VUs 2 минуты
-    { duration: '1m', target: 50 },   // Увеличение до 50 VUs
-    { duration: '2m', target: 50 },   // Удержание: 50 VUs 2 минуты
-    { duration: '1m', target: 100 },  // Увеличение до 100 VUs
-    { duration: '3m', target: 100 },  // Удержание: 100 VUs 3 минуты
+    { duration: '2m', target: 100 },  // Разогрев: 100 VUs
+    { duration: '2m', target: 200 },  // Увеличение до 200 VUs
+    { duration: '2m', target: 200 },  // Удержание: 200 VUs
+    { duration: '2m', target: 300 },  // Увеличение до 300 VUs
+    { duration: '2m', target: 300 },  // Удержание: 300 VUs
+    { duration: '2m', target: 400 },  // Увеличение до 400 VUs
+    { duration: '2m', target: 400 },  // Удержание: 400 VUs
+    { duration: '2m', target: 500 },  // Увеличение до 400 VUs
+    { duration: '2m', target: 500 },  // Удержание: 400 VUs
+    { duration: '2m', target: 600 },  // Увеличение до 400 VUs
+    { duration: '2m', target: 600 },  // Удержание: 400 VUs
     { duration: '1m', target: 0 },    // Плавное завершение
   ],
-  
+
   // Пороги успешности
   thresholds: {
     http_req_duration: ['p(95)<500'],  // 95% запросов < 500ms
@@ -39,27 +44,40 @@ export default function () {
     // Случайный ID от 1 до 10
     const cityId = Math.floor(Math.random() * 10) + 1;
     const res = http.get(`${BASE_URL}/Cities/${cityId}`, { headers: HEADERS });
-    
+
     const success = check(res, {
       'status is 200': (r) => r.status === 200,
-      'response has id': (r) => r.json('id') !== undefined,
+      'response has id': (r) => {
+        if (r.status !== 200) {
+          return false;
+        }
+        const body = r.json();
+        return body && body.id !== undefined;
+      },
     });
-    
+
     errorRate.add(!success);
-  } 
+  }
   // 20% запросов - список городов
   else {
     const res = http.get(`${BASE_URL}/Cities`, { headers: HEADERS });
-    
+
     const success = check(res, {
       'status is 200': (r) => r.status === 200,
-      'response is array': (r) => Array.isArray(r.json()),
+      'response is array': (r) => {
+        if (r.status !== 200) {
+          return false;
+        }
+        const body = r.json();
+        return Array.isArray(body);
+      },
     });
-    
+
     errorRate.add(!success);
   }
-  
+
   // Think time: пауза между запросами
   sleep(Math.random() * 0.5 + 0.1); // 0.1-0.6 секунд
 }
+
 

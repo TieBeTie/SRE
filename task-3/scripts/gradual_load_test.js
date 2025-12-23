@@ -11,11 +11,19 @@ export const options = {
     { duration: '3m', target: 10 },   // Удержание 10 VUs
     { duration: '2m', target: 20 },   // Увеличение до 20 VUs
     { duration: '3m', target: 20 },   // Удержание 20 VUs
-    { duration: '2m', target: 30 },   // Увеличение до 30 VUs
-    { duration: '3m', target: 30 },   // Удержание 30 VUs
-    { duration: '1m', target: 0 },    // Завершение
+    { duration: '2m', target: 50 },   // Увеличение до 50 VUs
+    { duration: '3m', target: 50 },   // Удержание 50 VUs
+    { duration: '2m', target: 100 },   // Увеличение до 100 VUs
+    { duration: '3m', target: 100 },   // Удержание 100 VUs
+    { duration: '2m', target: 150 },   // Увеличение до 150 VUs
+    { duration: '3m', target: 150 },   // Удержание 150 VUs
+    { duration: '2m', target: 200 },   // Увеличение до 200 VUs
+    { duration: '3m', target: 200 },   // Удержание 200 VUs
+    { duration: '2m', target: 300 },   // Увеличение до 300 VUs
+    { duration: '3m', target: 300 },   // Удержание 300 VUs
+    { duration: '1m', target: 0 },     // Завершение
   ],
-  
+
   thresholds: {
     http_req_duration: ['p(95)<1000'],
     http_req_failed: ['rate<0.05'],    // < 5% ошибок
@@ -33,22 +41,23 @@ export default function () {
   if (Math.random() < 0.8) {
     const cityId = Math.floor(Math.random() * 10) + 1;
     const res = http.get(`${BASE_URL}/Cities/${cityId}`, { headers: HEADERS });
-    
+
     const success = check(res, {
       'status is 200': (r) => r.status === 200,
     });
-    
+
     errorRate.add(!success);
   } else {
     const res = http.get(`${BASE_URL}/Cities`, { headers: HEADERS });
-    
+
     const success = check(res, {
       'status is 200': (r) => r.status === 200,
     });
-    
+
     errorRate.add(!success);
   }
-  
+
   sleep(Math.random() * 0.5 + 0.2); // 0.2-0.7 секунд
 }
+
 

@@ -5,8 +5,8 @@
 2. Реализовать профиль на любом инструменте НТ (разработать скрипт)
    - Реализация: скрипты в `scripts/`
 3. Задать нефункциональные требования по производительности к системе (SLO/SLA)
-   - Определения SLO/SLA: [`REPORTS/SLO_SLA.md`](REPORTS/SLO_SLA.md)
+   - Определения SLO/SLA: [`reports/SLO_SLA.md`](reports/SLO_SLA.md)
 4. Найти максимальную производительность системы
-   - Результаты: [`REPORTS/SUMMARY.md`](REPORTS/SUMMARY.md)
+   - Результаты: [`reports/SUMMARY.md`](reports/SUMMARY.md)
 5. Написать краткий вывод: где достигнута максимальная производительность, где узкое место в системе, для подтверждения привести графики
-   - Вывод: [`REPORTS/REPORT.md`](REPORTS/REPORT.md)
+   - Вывод: [`reports/REPORT.md`](reports/REPORT.md)
